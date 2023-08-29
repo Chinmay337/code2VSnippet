@@ -37,7 +37,7 @@ std::string escapeSpecialCharacters(const std::string &line)
       escapedLine += "\\\"";
       break;
     case '\t':
-      escapedLine += "\\\\t"; // This is the change. We want the output to be \\t
+      escapedLine += "\\t"; // This is the change. We want the output to be \\t
       break;
     default:
       escapedLine += c;

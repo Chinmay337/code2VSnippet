@@ -1,33 +1,4 @@
-package main
-
-import (
-	"fmt"
-	"sync"
-)
-
-func processKeyValue(key string, value int, wg *sync.WaitGroup) {
-	defer wg.Done()
-	// Perform some processing on the key and value here
-	fmt.Printf("Processing key: %s, value: %d\n", key, value)
-}
-
-func main() {
-	// Create a map with some key-value pairs
-	data := map[string]int{
-		"apple":  5,
-		"banana": 10,
-		"orange": 3,
-	}
-
-	var wg sync.WaitGroup
-
-	for key, value := range data {
-		wg.Add(1)
-		go processKeyValue(key, value, &wg)
-	}
-
-	// Wait for all goroutines to finish
-	wg.Wait()
-
-	fmt.Println("All processing completed")
-}
+	// Define a Task for BulkInsert
+	_, task2 := trace.NewTask(context.Background(), "utils.BulkInsert")
+	utils.BulkInsert(db, key)
+	task2.End()
