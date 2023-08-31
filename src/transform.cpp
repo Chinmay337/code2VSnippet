@@ -12,17 +12,8 @@ const int MAX_CONCURRENT_THREADS = 8;
 
 std::vector<std::string> bodyLines;
 std::mutex mutex;
-void processLine(std::ifstream &file, size_t index)
+void processLine(const std::string &line, size_t index)
 {
-  std::string line;
-  {
-    std::lock_guard<std::mutex> lock(mutex);
-    if (!std::getline(file, line))
-    {
-      bodyLines[index] = "";
-      return; // No more lines to process
-    }
-  }
 
   // Convert leading spaces to tabs
   size_t spaces = 0;
@@ -55,21 +46,32 @@ void processLine(std::ifstream &file, size_t index)
 
 bool generateSnippetBody(std::ifstream &file, const char *extractedName)
 {
+  // Total Lines in File
   size_t totalLines = std::count(
                           std::istreambuf_iterator<char>(file),
                           std::istreambuf_iterator<char>(),
                           '\n') +
                       1;
-
+  // Set final string vector size to number of lines in file
   bodyLines.resize(totalLines);
+
+  // Vector for Raw Input Lines
+  std::vector<std::string> rawLines(totalLines);
 
   file.clear();
   file.seekg(0);
 
+  // Read file sequentially line by line into the Vector
+  for (size_t i = 0; i < totalLines; ++i)
+  {
+    std::getline(file, rawLines[i]);
+  }
+
+  // Launch threads to process each line
   std::vector<std::thread> threads;
   for (size_t i = 0; i < totalLines; ++i)
   {
-    threads.emplace_back(processLine, std::ref(file), i);
+    threads.emplace_back(processLine, std::ref(rawLines[i]), i);
   }
 
   for (auto &thread : threads)
