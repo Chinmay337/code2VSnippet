@@ -15,9 +15,9 @@ int main(int argc, char *argv[])
   }
 
   const char *filename = argv[1];
-  const char *extractedName = extractName(filename);
+  const char *extractedName = extractName(filename); // get file name
 
-  std::ifstream file(filename);
+  std::ifstream file(filename); // read file content
 
   if (!file)
   {
@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     return 2;
   }
 
-  if (!generateSnippetBody(file, extractedName))
+  if (!generateSnippetBody(file, extractedName)) // try to parse each line number and see if all is successful
   {
     std::cerr << "Error generating snippet body" << std::endl;
     return 3;
@@ -38,37 +38,6 @@ int main(int argc, char *argv[])
 
 /*
 
-# Including Libs
-g++ -std=c++20 -o main main.cpp utils/util.cpp
-
 g++ -std=c++20 -o main main.cpp utils.cpp transform.cpp -lpthread
-
-# Development
-g++ -std=c++20 -o main main.cpp
-
-&& ./main
-
-# Production
-g++ -std=c++20 -O3 -o quicksort quicksort.cpp && ./quicksort
-
-
-
-"Command Description": {
-    "prefix": "<filename>",
-    "body": [
-      "func createWebServer() {",
-
-      "\thttp.HandleFunc(\"/\", func(w http.ResponseWriter, r *http.Request) {",
-      "\t\tfmt.Fprintf(w, \"Hello World\")",
-      "\t})",
-      "",
-      "\thttp.ListenAndServe(\":8080\", nil)",
-      "\t//curl localhost:8080",
-
-      "}"
-    ],
-    "description": "Log output to console"
-  },
-
 
 */

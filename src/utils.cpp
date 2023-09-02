@@ -4,7 +4,8 @@
 #include <fstream>
 #include <iostream>
 
-const char *extractName(const char *filename)
+const char *extractName(const char *filename) // gets the filename from the path
+
 {
   const char *dot = std::strchr(filename, '.');
   if (dot == nullptr)
@@ -23,7 +24,7 @@ const char *extractName(const char *filename)
   return extracted;
 }
 
-std::string escapeSpecialCharacters(const std::string &line)
+std::string escapeSpecialCharacters(const std::string &line) // logic to convert to VSCode snippet format
 {
   std::string escapedLine;
   for (char c : line)

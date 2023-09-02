@@ -10,9 +10,10 @@
 
 const int MAX_CONCURRENT_THREADS = 8;
 
-std::vector<std::string> bodyLines;
-std::mutex mutex;
-void processLine(const std::string &line, size_t index)
+std::vector<std::string> bodyLines; // total lines in file
+std::mutex mutex;                   // mutex to guard
+
+void processLine(const std::string &line, size_t index) // we pass each line to this func
 {
 
   // Convert leading spaces to tabs

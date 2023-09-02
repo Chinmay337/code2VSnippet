@@ -1,4 +1,0 @@
-	// Define a Task for BulkInsert
-	_, task2 := trace.NewTask(context.Background(), "utils.BulkInsert")
-	utils.BulkInsert(db, key)
-	task2.End()
